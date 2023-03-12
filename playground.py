@@ -1,43 +1,17 @@
-# get the current path
+# get the /data/train_val_list.txt's row number
+
 import os
-import shutil
-current_path = os.getcwd()
+import numpy as np
 
+current_dir = os.path.dirname(os.path.abspath(__file__))
 
-# copy all of the images from multiple directories into one directory
+# get the /data/train_val_list.txt's each row in a list element
+with open(current_dir + '/data/train_val_list.txt') as f:
+    lines = f.readlines()
+    lines = [line.strip() for line in lines]
 
-def copy_images():
-    """
-    copy images from /data/images_001/images to /data/all_images
+# print the first 10 lines and last 10 lines
 
-    examples: 
-    /data/images_001/images/ -> /data/all_images
-    /data/images_002/images/ -> /data/all_images
-    /data/images_003/images/ -> /data/all_images
-    """
+print('first 10 lines: ', lines[:10])
+print('last 10 lines: ', lines[-10:])
 
-    # get the current path
-    current_path = os.getcwd()
-
-    # get the list of directories
-    dir_list = os.listdir(current_path)
-
-    # loop through the directories
-    for dir in dir_list:
-        # get the full path
-        full_path = os.path.join(current_path, dir)
-        # check if the directory exists
-        if os.path.isdir(full_path):
-            # get the list of files
-            file_list = os.listdir(full_path)
-            # loop through the files
-            for file in file_list:
-                # get the full path
-                full_file_path = os.path.join(full_path, file)
-                # check if the file is a jpeg
-                if os.path.isfile(full_file_path) and file.endswith('.png'):
-                    # copy the file to the new directory
-                    shutil.copy(full_file_path, '/data/all_images')
-
-
-copy_images()
